@@ -61,7 +61,7 @@ for line in sequences:
 	foundMotif = 0
 	geneName = re.sub(r'\>', '',line.split()[0])
 	sequence = line.split()[3][10:] #ignore first 10 resdiues as they MAY be in H8
-	print geneName
+	print(geneName)
 	if int(line.split()[1]) != 1:
 		offset = int(line.split()[1])
 	else:
@@ -71,49 +71,49 @@ for line in sequences:
 		tmpStart = int(match.start())+offset
 		tmpEnd = match.end()+offset+4
 		foundShort = np.append(foundShort, np.array([(geneName,match.start()+offset,match.end()+offset+4, partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"S",tmpStart,tmpEnd,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"S",tmpStart,tmpEnd,partialSeq))
 		foundMotif +=1
 
 	for match in re.finditer(regexLong,sequence):
 		partialSeq = sequence[(match.start()):(match.end()+6)]
 		foundLong = np.append(foundLong, np.array([(geneName,match.start()+offset,match.end()+offset+5, partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"L",match.start()+offset,match.end()+offset+5,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"L",match.start()+offset,match.end()+offset+5,partialSeq))
 		foundMotif +=1
 
 	for match in re.finditer(ps1,sequence):
 		partialSeq = sequence[(match.start()):(match.end()+5)]
 		foundPartial = np.append(foundPartial, np.array([(geneName,match.start()+offset,match.end()+offset+4, partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"PS",match.start()+offset,match.end()+offset+4,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"PS",match.start()+offset,match.end()+offset+4,partialSeq))
 		foundMotif +=1
 
 	for match in re.finditer(ps2,sequence):
 		partialSeq = sequence[(match.start()):(match.end()+5)]
 		foundPartial = np.append(foundPartial, np.array([(geneName,match.start()+offset,match.end()+offset+4, partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"PS",match.start()+offset,match.end()+offset+4,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"PS",match.start()+offset,match.end()+offset+4,partialSeq))
 		foundMotif +=1
 
 	for match in re.finditer(ps3,sequence):
 		partialSeq = sequence[(match.start()):(match.end()+5)]
 		foundPartial = np.append(foundPartial, np.array([(geneName,match.start()+offset,match.end()+offset+4,partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"PS",match.start()+offset,match.end()+offset+4,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"PS",match.start()+offset,match.end()+offset+4,partialSeq))
 		foundMotif +=1
 
 	for match in re.finditer(pl1,sequence):
 		partialSeq = sequence[(match.start()):(match.end()+6)]
 		foundPartial = np.append(foundPartial, np.array([(geneName,match.start()+offset,match.end()+offset+5, partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"PL",match.start()+offset,match.end()+offset+5,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"PL",match.start()+offset,match.end()+offset+5,partialSeq))
 		foundMotif +=1
 
 	for match in re.finditer(pl2,sequence):
 		partialSeq = sequence[(match.start()):(match.end()+6)]
 		foundPartial = np.append(foundPartial, np.array([(geneName,match.start()+offset,match.end()+offset+5, partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"PL",match.start()+offset,match.end()+offset+5,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"PL",match.start()+offset,match.end()+offset+5,partialSeq))
 		foundMotif +=1
 
 	for match in re.finditer(pl3,sequence):
 		partialSeq = sequence[(match.start()):(match.end()+6)]
 		foundPartial = np.append(foundPartial, np.array([(geneName,match.start()+offset,match.end()+offset+5, partialSeq)], dtype=geneMotif))
-		print "%11s %1s %4d %4d %17s" % (geneName,"PL",match.start()+offset,match.end()+offset+5,partialSeq)
+		print("%11s %1s %4d %4d %17s" % (geneName,"PL",match.start()+offset,match.end()+offset+5,partialSeq))
 		foundMotif +=1
 
 	if (foundMotif == 0):
@@ -128,7 +128,7 @@ numbWithout = np.count_nonzero(np.unique(foundNone['gene']))
 numbPartial = totalReceptors - numbWith - numbWithout
 
 
-print "Short:%4d   Long:%4d   Intercept:%4d   With:%4d    Partial:%4d    Without:%4d    total:%4d" %(numbShortUnique,numbLongUnique,numbInterUnique,numbWith,numbPartial,numbWithout,totalReceptors)
+print("Short:%4d   Long:%4d   Intercept:%4d   With:%4d    Partial:%4d    Without:%4d    total:%4d" %(numbShortUnique,numbLongUnique,numbInterUnique,numbWith,numbPartial,numbWithout,totalReceptors))
 
 
 interData = np.unique(np.intersect1d(foundShort['gene'], foundLong['gene']))
@@ -150,10 +150,10 @@ joined = rfn.join_by('gene', joined, foundNone, jointype='outer',usemask=False)
 for x in range(0,joined.size):
 	if joined['count1'][x] == 999999:
 		joined['count1'][x] = 0
-        if joined['count2'][x] == 999999:
-                joined['count2'][x] = 0
-        if joined['count'][x] == 999999:
-                joined['count'][x] = 0
+	if joined['count2'][x] == 999999:
+			joined['count2'][x] = 0
+	if joined['count'][x] == 999999:
+			joined['count'][x] = 0
 
 fileData = folder + inClass + ".codes.csv"
 fileNameFound = folder + inClass + ".found.csv"
